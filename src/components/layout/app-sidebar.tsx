@@ -1,13 +1,17 @@
-import * as React from 'react'
-import { ChevronRight } from 'lucide-react'
+import * as React from 'react';
+import {
+  BookOpenCheck,
+  ChevronRight,
+  LogOut,
+  Users,
+  UsersRound,
+} from 'lucide-react';
 
-import { SearchForm } from '@/components/search-form'
-import { VersionSwitcher } from '@/components/version-switcher'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible'
+} from '@/components/ui/collapsible';
 import {
   Sidebar,
   SidebarContent,
@@ -19,20 +23,24 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from '@/components/ui/sidebar'
+} from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
 
 // This is sample data.
 const data = {
   versions: ['1.0.1', '1.1.0-alpha', '2.0.0-beta1'],
   navMain: [
     {
-      title: 'Getting Started',
-      url: '#',
+      title: 'Students',
+      url: '/students',
+      icon: UsersRound,
       items: [
         {
           title: 'Installation',
           url: '#',
-          isActive: true,
+          // isActive: true,
         },
         {
           title: 'Project Structure',
@@ -41,8 +49,9 @@ const data = {
       ],
     },
     {
-      title: 'Building Your Application',
-      url: '#',
+      title: 'Teachers',
+      url: '/teachers',
+      icon: Users,
       items: [
         {
           title: 'Routing',
@@ -96,8 +105,9 @@ const data = {
       ],
     },
     {
-      title: 'API Reference',
-      url: '#',
+      title: 'Exams',
+      url: '/exams',
+      icon: BookOpenCheck,
       items: [
         {
           title: 'Components',
@@ -162,17 +172,19 @@ const data = {
     //   ],
     // },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
+        <img
+          className='rounded-md h-32 max-w-lg mx-auto'
+          src='https://picsum.photos/100'
+          alt='sidebar logo'
+          width={150}
+          height={80}
         />
-        <SearchForm />
       </SidebarHeader>
       <SidebarContent className='gap-0'>
         {/* We create a collapsible SidebarGroup for each parent. */}
@@ -180,7 +192,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <Collapsible
             key={item.title}
             title={item.title}
-            defaultOpen
+            defaultOpen={false}
             className='group/collapsible'
           >
             <SidebarGroup>
@@ -189,16 +201,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 className='group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
               >
                 <CollapsibleTrigger>
-                  {item.title}{' '}
+                  <item.icon /> <span className='ml-2'>{item.title}</span>{' '}
                   <ChevronRight className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90' />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
-              <CollapsibleContent>
+              <CollapsibleContent className={cn('mx-4')}>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {item.items.map((item) => (
                       <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton asChild isActive={item.isActive ?? false}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={item.isActive ?? false}
+                        >
                           <a href={item.url}>{item.title}</a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -211,6 +226,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
+      <Separator />
+      <div className='flex m-2 p-2'>
+        <Button className={cn('grow')}>
+          <LogOut /> Logout
+        </Button>
+      </div>
     </Sidebar>
-  )
+  );
 }

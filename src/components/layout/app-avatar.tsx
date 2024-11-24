@@ -1,11 +1,25 @@
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
-const AppAvatar = () => {
-  const imageUrl = 'https://i.pravatar.cc/300';
+type avatarProps = {
+  imageUrl? : string,
+  extraClass? : string,
+  width?: number,
+  height?: number,
+  alt?: string
+}
+const AppAvatar = (avatarSettings:avatarProps) => {
+  const { imageUrl, width, height, alt, extraClass } = avatarSettings;
   return (
     <Avatar>
-      <AvatarImage src={imageUrl} width={10} height={10} alt='avatar' className={cn('w-10 h-10 rounded')} loading="lazy" />
+      <AvatarImage
+        src={imageUrl}
+        width={width || 10}
+        height={height || 10}
+        alt={alt || 'avatar'}
+        className={cn(extraClass || 'w-10 h-10 rounded')}
+        loading='lazy'
+      />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   );
