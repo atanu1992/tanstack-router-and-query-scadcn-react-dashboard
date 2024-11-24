@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-
+import logo from '@/assets/logo/logo.jpg';
 type avatarProps = {
   imageUrl? : string,
   extraClass? : string,
@@ -9,7 +9,8 @@ type avatarProps = {
   alt?: string
 }
 const AppAvatar = (avatarSettings:avatarProps) => {
-  const { imageUrl, width, height, alt, extraClass } = avatarSettings;
+
+  const { imageUrl = logo, width, height, alt, extraClass } = avatarSettings;
   return (
     <Avatar>
       <AvatarImage
